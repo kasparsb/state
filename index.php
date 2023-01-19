@@ -12,6 +12,10 @@ $version = $pkg->version;
 </head>
 <body>
     <h1>State</h1>
+    <form method="post" action="">
+        <input type="text" name="number" />
+        <button type="submit">Send</button>
+    </form>
     <script src="build/app.min-<?php echo $version ?>.js"></script>
 </body>
 </html>
