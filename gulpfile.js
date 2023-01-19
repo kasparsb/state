@@ -77,9 +77,9 @@ function bundleJs(browserify, compress, firstRun) {
                 only: [
                     function(path) {
                         // Enter npm packages which should be compilded by babel
-                        // if (path.indexOf('/node_modules/{dir}/') >= 0) {
-                        //     return true;
-                        // }
+                        if (path.indexOf('/node_modules/dom-helpers/') >= 0) {
+                            return true;
+                        }
 
                         // By default compile everything except node_modules
                         if (path.indexOf('/node_modules/') >= 0) {
