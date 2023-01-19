@@ -16,7 +16,7 @@ function setConfig(config) {
 }
 
 function start() {
-    send('/api/start', 'POST')
+    send('/api/state/session/start', 'POST')
         .then(r => r.json())
         .then(r => {
             sessionId = r.session_id
@@ -27,12 +27,16 @@ function start() {
 
 /**
  * Katra state izmaiņa tiek paziņota state serverim
+ *
+ * @param string Key tas ir pirmais top level key
+ * @param string path, tas ir nested pilnais path, kuru vērtību objektā maina
+ * @param variants Vērtība. vai nu objekts vai string|number|utt
  */
 function notify(path, value) {
 
     queue.push({
-        'path': path,
-        'value': value
+        path: path,
+        value: value
     })
 
     checkQueue();
@@ -48,7 +52,7 @@ let checkQueue = throttle(function(){
     }
 
     // Nosūtām rindu un notīrām queue
-    send('/api/state', 'POST', JSON.stringify({
+    send('/api/state/session/changes', 'POST', JSON.stringify({
         session_id: sessionId,
         changes: queue
     }));
